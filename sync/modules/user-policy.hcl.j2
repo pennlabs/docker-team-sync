@@ -23,13 +23,13 @@ path "sys/mounts/*"
 # `data/` will not appear in the actual usage of vault since most clients
 # intelligently add it in. it only appears in the policy
 {% for repo in repos %}
+path "secrets/data/{{ repo }}-*"
+{
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
+
 path "secrets/data/{{ repo }}"
 {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
 {% endfor %}
-
-path "secrets/data/{{ team_name }}"
-{
-  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
-}
