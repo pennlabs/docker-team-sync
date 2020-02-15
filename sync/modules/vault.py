@@ -19,7 +19,8 @@ def sync(teams):
             t = Template(f.read())
             for team in teams["leads"]:
                 base_team_slug = team.slug.replace("-leads", "")
-                pol = t.render(team_name=base_team_slug)
+                repos = [x.name for x in team.get_repos()]
+                pol = t.render(team_name=base_team_slug, repos=repos)
                 client.sys.create_or_update_policy(name=base_team_slug, policy=pol)
                 client.auth.github.map_team(team_name=team.slug, policies=[base_team_slug])
     else:
