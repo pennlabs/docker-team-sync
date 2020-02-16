@@ -25,10 +25,10 @@ def sync(teams):
                 client.sys.create_or_update_policy(name=base_team_slug, policy=pol)
                 client.auth.github.map_team(team_name=team.slug, policies=[base_team_slug])
         # Apply admin policy
-        admin_team_name = "sre"
+        admin_team_slug = "sre"
         with open("sync/modules/admin-policy.hcl") as admin_policy:
-            client.sys.create_or_update_policy(name=admin_team_name, policy=admin_policy.read())
-            client.auth.github.map_team(team_name=admin_team_name, policies=[admin_team_name])
+            client.sys.create_or_update_policy(name=admin_team_slug, policy=admin_policy.read())
+            client.auth.github.map_team(team_name=admin_team_slug, policies=[admin_team_slug])
 
     else:
         print("vault: Vault sealed. Stopping.")
