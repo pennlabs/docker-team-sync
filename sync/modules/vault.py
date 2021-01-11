@@ -1,12 +1,15 @@
 import os
 
+import boto3
 import hvac
 from jinja2 import Template
 
 
 def sync(teams):
+    session = boto3.Session()
+    credentials = session.get_credentials()
     client = hvac.Client(url=os.getenv("VAULT_ADDR"))
-    client.auth_approle(os.environ.get("ROLE_ID"), os.environ.get("SECRET_ID"))
+    client.auth.aws.iam_login(credentials.access_key, credentials.secret_key, credentials.token)
     if not client.sys.is_sealed():
         # Apply normal team policies
         with open("sync/modules/user-policy.hcl.j2") as f:
