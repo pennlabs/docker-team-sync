@@ -14,6 +14,7 @@ flake8-quotes = "*"
 hvac = "*"
 jinja2 = "*"
 pygithub = "*"
+boto3 = "*"
 
 [requires]
 python_version = "3"
